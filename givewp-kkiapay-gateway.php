@@ -53,6 +53,8 @@ function give_kkiapay_init()
         return;
     }
 
+
+
     // Charge les fichiers nécessaires
     require_once GIVE_KKIAPAY_PLUGIN_DIR . 'includes/admin-settings.php';
 
@@ -60,7 +62,13 @@ function give_kkiapay_init()
     load_plugin_textdomain('give-kkiapay', false, dirname(GIVE_KKIAPAY_BASENAME) . '/languages/');
 
     // Enregistre la passerelle
-    add_filter('give_payment_gateways', 'give_kkiapay_register_gateway');
+    add_filter('give_payment_gateways', 'give_kkiapay_register_gateway', 10, 1);
+
+    // 2. Force l'activation
+    add_filter('give_enabled_payment_gateways', 'give_kkiapay_force_enable', 15, 1);
+
+    // 3. Contrôle d'affichage
+    add_filter('give_show_gateways', 'give_kkiapay_force_display', 20, 2);
 
     // Ajoute la section de configuration
     add_filter('give_get_sections_gateways', 'give_kkiapay_add_settings_section');
@@ -91,14 +99,30 @@ function give_kkiapay_give_version_notice()
 /**
  * Enregistre la passerelle Kkiapay
  */
-function give_kkiapay_register_gateway($gateways)
-{
+function give_kkiapay_register_gateway($gateways) {
     $gateways['kkiapay'] = [
         'admin_label'    => esc_html__('Kkiapay', 'give-kkiapay'),
-        'checkout_label' => esc_html__('Carte Bancaire/Mobile Money (via Kkiapay)', 'give-kkiapay'),
+        'checkout_label' => esc_html__('Paiement Sécurisé Kkiapay', 'give-kkiapay'),
+        'supports' => [
+            'donation_form',
+            'fee_recovery',
+            'subscriptions'
+        ]
     ];
     return $gateways;
 }
+
+function give_kkiapay_force_enable($enabled_gateways) {
+    if (!isset($enabled_gateways['kkiapay'])) {
+        $enabled_gateways['kkiapay'] = give_kkiapay_register_gateway([])['kkiapay'];
+    }
+    return $enabled_gateways;
+}
+
+function give_kkiapay_force_display($show, $gateway_id) {
+    return ($gateway_id === 'kkiapay') ? true : $show;
+}
+
 
 /**
  * Ajoute la section de configuration Kkiapay
