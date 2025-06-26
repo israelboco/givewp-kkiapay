@@ -1,0 +1,39 @@
+.give-kkiapay-form-wrap {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.give-kkiapay-button {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.give-kkiapay-button:hover {
+    background-color: #4a148c;
+}
+
+.give-kkiapay-feedback {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.give-kkiapay-feedback.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    display: block;
+}
+
+.give-kkiapay-feedback.error {
+    background-color: #f2dede;
+    color: #a94442;
+    display: block;
+}

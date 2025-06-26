@@ -2,11 +2,11 @@
 
 /**
  * Plugin Name: GiveWP - Kkiapay Gateway
- * Plugin URI: https://example.com/givewp-kkiapay
+ * Plugin URI: https://github.com/israelboco/givewp-kkiapay
  * Description: Intègre la passerelle de paiement Kkiapay à GiveWP avec des fonctionnalités avancées.
  * Version: 2.0
  * Author: isboco
- * Author URI: https://example.com
+ * Author URI: https://github.com/israelboco
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: give-kkiapay
