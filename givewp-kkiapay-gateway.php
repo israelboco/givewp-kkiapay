@@ -64,6 +64,14 @@ function give_kkiapay_init()
     // Enregistre la passerelle
     add_filter('give_payment_gateways', 'give_kkiapay_register_gateway', 10, 1);
 
+    add_action('give_init', function() {
+        $options = get_option('give_settings');
+        if (!isset($options['gateways']['kkiapay'])) {
+            $options['gateways']['kkiapay'] = '1'; // Active par défaut
+            update_option('give_settings', $options);
+        }
+    });
+
     // 2. Force l'activation
     add_filter('give_enabled_payment_gateways', 'give_kkiapay_force_enable', 15, 1);
 
@@ -103,11 +111,7 @@ function give_kkiapay_register_gateway($gateways) {
     $gateways['kkiapay'] = [
         'admin_label'    => esc_html__('Kkiapay', 'give-kkiapay'),
         'checkout_label' => esc_html__('Paiement Sécurisé Kkiapay', 'give-kkiapay'),
-        'supports' => [
-            'donation_form',
-            'fee_recovery',
-            'subscriptions'
-        ]
+        'supports'      => ['donation']
     ];
     return $gateways;
 }
